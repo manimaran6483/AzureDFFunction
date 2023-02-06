@@ -99,8 +99,8 @@
 						for all valid configurations for application insights -->
 					<!-- <disableAppInsights></disableAppInsights> -->
 					<runtime>
-						<os>windows</os>
-						<image></image>
+						<os>docker</os>
+						<image>[hub-user/]repo-name[:tag]</image>
 						<serverId></serverId>
 						<registryUrl></registryUrl>
 					</runtime>
