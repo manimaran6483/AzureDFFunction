@@ -25,7 +25,7 @@ public class BlobFunction {
     	      methods = {HttpMethod.GET}, 
     	      authLevel = AuthorizationLevel.ANONYMOUS) 
     	    HttpRequestMessage<Optional<String>> request,
-    	    @BlobInput(name = "file", dataType = "String", path = "input/{Query.file}", connection="AzureWebJobsStorage") String content,
+    	    @BlobInput(name = "file", dataType = "String", path = "input/{Header.fileName}", connection="AzureWebJobsStorage") String content,
     	    @CosmosDBOutput(
             name = "databaseOutput",
             databaseName = "ADFCosmosDB",
@@ -39,6 +39,10 @@ public class BlobFunction {
 		context.getLogger().info("Query Param: "+ request.getQueryParameters().get("file"));
 		
         context.getLogger().info("Blob Received - "+ content);
+        
+        String fileName = request.getHeaders().get("filename");
+		
+		context.getLogger().info(fileName); 
         
         List<String> contentList = Arrays.asList(content.split("\n"));
         
