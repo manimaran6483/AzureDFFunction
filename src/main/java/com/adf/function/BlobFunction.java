@@ -39,10 +39,16 @@ public class BlobFunction {
 
 		context.getLogger().info("Function Started");
 		
+		context.getLogger().info("Query Param: "+ request.getQueryParameters().get("file"));
+		
         Employee emp = new Employee();
         
+        context.getLogger().info("Blob Received - "+ content);
+        
+        context.getLogger().info("Blob Received - "+ content.toString());
+        
         Object obj = SerializationUtils.deserialize(content);
-        context.getLogger().info("Blob Received - "+ obj.toString());
+        
         
         emp = (Employee) obj;
         
