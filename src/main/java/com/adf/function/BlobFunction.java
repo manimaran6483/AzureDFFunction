@@ -27,7 +27,7 @@ public class BlobFunction {
     	      methods = {HttpMethod.GET}, 
     	      authLevel = AuthorizationLevel.ANONYMOUS) 
     	    HttpRequestMessage<Optional<String>> request,
-    	    @BlobInput(name = "file", dataType = "", path = "input/{Query.file}", connection="AzureWebJobsStorage") List<Employee> content,
+    	    @BlobInput(name = "file", dataType = "String", path = "input/{Query.file}", connection="AzureWebJobsStorage") String content,
     	    @CosmosDBOutput(
             name = "databaseOutput",
             databaseName = "ADFCosmosDB",
@@ -44,10 +44,14 @@ public class BlobFunction {
         
         context.getLogger().info("Blob Received - "+ content.toString());
         
-		for(Employee e: content) {
+        context.getLogger().info(content.split(",").toString());
+        
+        context.getLogger().info(content.split("\n").toString());
+        
+		/*for(Employee e: content) {
 			document.setValue(e);
 			context.getLogger().info("Saved to DB - " + e.toString());
-		}
+		}*/
        
 		return request.createResponseBuilder(HttpStatus.OK)
 			        .body("Object Saved : " )
