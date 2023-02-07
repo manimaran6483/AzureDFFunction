@@ -1,4 +1,4 @@
-package com.batch.example;
+package com.adf.function;
 
 import java.util.Optional;
 
@@ -27,7 +27,7 @@ public class BlobFunction {
     	      methods = {HttpMethod.GET}, 
     	      authLevel = AuthorizationLevel.ANONYMOUS) 
     	    HttpRequestMessage<Optional<String>> request,
-    	    @BlobInput(name = "file", dataType = "binary", path = "input/") byte[] content,
+    	    @BlobInput(name = "file", dataType = "binary", path = "input/{Query.file}") byte[] content,
     	    @CosmosDBOutput(
             name = "databaseOutput",
             databaseName = "ADFCosmosDB",

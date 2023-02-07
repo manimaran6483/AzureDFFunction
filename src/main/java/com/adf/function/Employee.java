@@ -1,4 +1,4 @@
-package com.batch.example.model;
+package com.adf.function;
 
 import java.util.Date;
 
