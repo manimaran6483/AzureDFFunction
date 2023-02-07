@@ -40,7 +40,7 @@ public class BlobFunction {
 		
         context.getLogger().info("Blob Received - "+ content);
         
-        List<String> contentList = Arrays.asList(content.split(" "));
+        List<String> contentList = Arrays.asList(content.split("\n"));
         
         for(String s : contentList) {
 			Employee emp = Employee.createEmployee(s);
