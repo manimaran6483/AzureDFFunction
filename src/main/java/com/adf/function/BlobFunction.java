@@ -24,17 +24,16 @@ public class BlobFunction {
 
 	@SuppressWarnings("unchecked")
 	@FunctionName("ReadFromBlobAndWriteToCosmosDB")
-	@StorageAccount("DefaultEndpointsProtocol=https;AccountName=azblobstgact;AccountKey=BanPPWQqgp/0U19HDkoHMQQvmGzKRs2uClO2+MEydm4iz3n+XeI8GK+HLEPVXPTtIXWLgJIKqsRx+AStqNfolg==;EndpointSuffix=core.windows.net")
     public HttpResponseMessage  run( @HttpTrigger(name = "HttpTrigger", 
     	      methods = {HttpMethod.GET}, 
     	      authLevel = AuthorizationLevel.ANONYMOUS) 
     	    HttpRequestMessage<Optional<String>> request,
-    	    @BlobInput(name = "file", dataType = "binary", path = "input/{Query.file}") byte[] content,
+    	    @BlobInput(name = "file", dataType = "binary", path = "input/{Query.file}", connection="AzureWebJobsStorage") byte[] content,
     	    @CosmosDBOutput(
             name = "databaseOutput",
             databaseName = "ADFCosmosDB",
             collectionName = "ADFDemoCollection",
-            connectionStringSetting = "AccountEndpoint=https://adfdemodb.documents.azure.com:443/;AccountKey=jYi62k7HLZ51HXdl3FSwKH3YUblt5PyyKOywC1382kVKjaXsAOX8zVnBF8nFuW01YllrG3BvNOS8ACDbRpQsRA==;")
+            connectionStringSetting = "AzureCosmosDBConnection")
             OutputBinding<Employee> document,
             final ExecutionContext context) {
 
