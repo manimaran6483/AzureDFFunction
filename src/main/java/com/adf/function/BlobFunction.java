@@ -22,13 +22,12 @@ import com.microsoft.azure.functions.annotation.StorageAccount;
 
 public class BlobFunction {
 
-	@SuppressWarnings("unchecked")
 	@FunctionName("ReadFromBlobAndWriteToCosmosDB")
     public HttpResponseMessage  run( @HttpTrigger(name = "HttpTrigger", 
     	      methods = {HttpMethod.GET}, 
     	      authLevel = AuthorizationLevel.ANONYMOUS) 
     	    HttpRequestMessage<Optional<String>> request,
-    	    @BlobInput(name = "file", dataType = "binary", path = "input/{Query.file}", connection="AzureWebJobsStorage") byte[] content,
+    	    @BlobInput(name = "file", dataType = "", path = "input/{Query.file}", connection="AzureWebJobsStorage") List<Employee> content,
     	    @CosmosDBOutput(
             name = "databaseOutput",
             databaseName = "ADFCosmosDB",
@@ -41,29 +40,15 @@ public class BlobFunction {
 		
 		context.getLogger().info("Query Param: "+ request.getQueryParameters().get("file"));
 		
-        Employee emp = new Employee();
-        
         context.getLogger().info("Blob Received - "+ content);
         
         context.getLogger().info("Blob Received - "+ content.toString());
         
-        Object obj = SerializationUtils.deserialize(content);
-        
-        
-        emp = (Employee) obj;
-        
-		document.setValue(emp);
-       
-		context.getLogger().info("Saved to DB");
-        
-		try {
-			return request.createResponseBuilder(HttpStatus.OK)
-			        .body("Object Saved : " + new ObjectMapper().writeValueAsString(emp))
-			        .build();
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for(Employee e: content) {
+			document.setValue(e);
+			context.getLogger().info("Saved to DB - " + e.toString());
 		}
+       
 		return request.createResponseBuilder(HttpStatus.OK)
 			        .body("Object Saved : " )
 			        .build();

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Employee {
 
-	private Integer empId;
+	private int empId;
 	private String firstname;
 	private String lastname;
 	private String address;
@@ -41,6 +41,11 @@ public class Employee {
 	}
 	public void setEmpId(Integer empId) {
 		this.empId = empId;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", firstname=" + firstname + ", lastname=" + lastname + ", address="
+				+ address + ", city=" + city + "]";
 	}
 	
 	
