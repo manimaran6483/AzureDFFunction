@@ -4,17 +4,14 @@ import java.util.Date;
 
 public class Employee {
 
-	private Integer id;
+	private Integer empId;
 	private String firstname;
 	private String lastname;
 	private String address;
 	private String city;
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
+	
+	
+	
 	public String getFirstname() {
 		return firstname;
 	}
@@ -38,6 +35,12 @@ public class Employee {
 	}
 	public void setCity(String city) {
 		this.city = city;
+	}
+	public Integer getEmpId() {
+		return empId;
+	}
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
 	}
 	
 	

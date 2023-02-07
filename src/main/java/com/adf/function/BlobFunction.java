@@ -1,5 +1,6 @@
 package com.adf.function;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.util.SerializationUtils;
@@ -21,6 +22,7 @@ import com.microsoft.azure.functions.annotation.StorageAccount;
 
 public class BlobFunction {
 
+	@SuppressWarnings("unchecked")
 	@FunctionName("ReadFromBlobAndWriteToCosmosDB")
 	@StorageAccount("DefaultEndpointsProtocol=https;AccountName=azblobstgact;AccountKey=BanPPWQqgp/0U19HDkoHMQQvmGzKRs2uClO2+MEydm4iz3n+XeI8GK+HLEPVXPTtIXWLgJIKqsRx+AStqNfolg==;EndpointSuffix=core.windows.net")
     public HttpResponseMessage  run( @HttpTrigger(name = "HttpTrigger", 
@@ -31,7 +33,7 @@ public class BlobFunction {
     	    @CosmosDBOutput(
             name = "databaseOutput",
             databaseName = "ADFCosmosDB",
-            collectionName = "Items",
+            collectionName = "ADFDemoCollection",
             connectionStringSetting = "AccountEndpoint=https://adfdemodb.documents.azure.com:443/;AccountKey=jYi62k7HLZ51HXdl3FSwKH3YUblt5PyyKOywC1382kVKjaXsAOX8zVnBF8nFuW01YllrG3BvNOS8ACDbRpQsRA==;")
             OutputBinding<Employee> document,
             final ExecutionContext context) {
@@ -39,8 +41,12 @@ public class BlobFunction {
 		context.getLogger().info("Function Started");
 		
         Employee emp = new Employee();
-        emp = (Employee)SerializationUtils.deserialize(content);
-		
+        
+        Object obj = SerializationUtils.deserialize(content);
+        context.getLogger().info("Blob Received - "+ obj.toString());
+        
+        emp = (Employee) obj;
+        
 		document.setValue(emp);
        
 		context.getLogger().info("Saved to DB");
