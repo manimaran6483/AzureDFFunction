@@ -1,5 +1,6 @@
 package com.adf.function;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class BlobFunction {
             databaseName = "ADFCosmosDB",
             collectionName = "ADFDemoCollection",
             connectionStringSetting = "AzureCosmosDBConnection")
-            OutputBinding<Employee> document,
+            OutputBinding<List<Employee>> document,
             final ExecutionContext context) {
 
 		context.getLogger().info("Function Started"); 
@@ -45,13 +46,15 @@ public class BlobFunction {
 		context.getLogger().info(fileName); 
         
         List<String> contentList = Arrays.asList(content.split("\n"));
-        
+        List<Employee> empList = new ArrayList<>();
         for(String s : contentList) {
 			Employee emp = Employee.createEmployee(s);
-			document.setValue(emp);
-			context.getLogger().info("Saved to DB - " + emp.toString());
+			empList.add(emp);
 			
 		}
+        
+        document.setValue(empList);
+		context.getLogger().info("Saved to DB - " + empList);
         
        
 		return request.createResponseBuilder(HttpStatus.OK)
