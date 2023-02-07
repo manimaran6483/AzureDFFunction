@@ -34,7 +34,7 @@ public class BlobFunction {
             OutputBinding<Employee> document,
             final ExecutionContext context) {
 
-		context.getLogger().info("Function Started");
+		context.getLogger().info("Function Started"); 
 		
 		context.getLogger().info("Query Param: "+ request.getQueryParameters().get("file"));
 		
