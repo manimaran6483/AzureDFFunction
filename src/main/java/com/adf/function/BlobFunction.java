@@ -1,11 +1,9 @@
 package com.adf.function;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.util.SerializationUtils;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.microsoft.azure.functions.ExecutionContext;
 import com.microsoft.azure.functions.HttpMethod;
 import com.microsoft.azure.functions.HttpRequestMessage;
@@ -42,22 +40,22 @@ public class BlobFunction {
 		
         context.getLogger().info("Blob Received - "+ content);
         
-        context.getLogger().info("Blob Received - "+ content.toString());
+        List<String> contentList = Arrays.asList(content.split(" "));
         
-        context.getLogger().info(content.split(",").toString());
+        for(String s : contentList) {
+			Employee emp = Employee.createEmployee(s);
+			document.setValue(emp);
+			context.getLogger().info("Saved to DB - " + emp.toString());
+			
+		}
         
-        context.getLogger().info(content.split("\n").toString());
-        
-		/*for(Employee e: content) {
-			document.setValue(e);
-			context.getLogger().info("Saved to DB - " + e.toString());
-		}*/
        
 		return request.createResponseBuilder(HttpStatus.OK)
-			        .body("Object Saved : " )
+			        .body("Object Saved" )
 			        .build();
 		
     }
+	
 
 	
 }

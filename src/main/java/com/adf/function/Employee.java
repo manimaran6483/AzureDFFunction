@@ -2,6 +2,7 @@ package com.adf.function;
 
 import java.util.Date;
 
+
 public class Employee {
 
 	private int empId;
@@ -49,7 +50,20 @@ public class Employee {
 	}
 	
 	
-	
+	public static Employee createEmployee(String txt) {
+		
+		String[] empDetails = txt.split(",");
+
+		Employee emp = new Employee();
+		emp.setEmpId(Integer.parseInt(empDetails[0]));
+		emp.setFirstname(empDetails[1]);
+		emp.setLastname(empDetails[2]);
+		emp.setAddress(empDetails[3]);
+		emp.setCity(empDetails[4]);
+		
+		return emp;
+		
+	}
 	
 	
 }
